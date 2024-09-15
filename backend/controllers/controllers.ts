@@ -1,5 +1,5 @@
 import { Request, Response} from "express";
-import prisma from '../models/models'
+import {ProductsModel, ImagesModel, SkusModel} from '../models/models'
 
 /**
 *   Query com array de números
@@ -15,17 +15,7 @@ export async function getProductsController(req: Request<{}, {}, {}, ReqQuery>, 
     const ids = req.query.ids;
     const number_ids = ids.map((id) => parseInt(id))
 
-    const products = await prisma.products.findMany({
-        where:{
-            id:{in: number_ids}
-        },
-        select:{
-            id: true,
-            name: true,
-            price: true,
-            category: true,
-        }
-    })
+    const products = await ProductsModel.getProductsByIdArray(number_ids)
 
     res.send(products)
 }
@@ -36,16 +26,7 @@ export async function getProductsController(req: Request<{}, {}, {}, ReqQuery>, 
 export async function getImagesController(req: Request, res: Response){
     const product_id: number = parseInt(req.params.product_id);
 
-    const images = await prisma.images.findMany({
-        where:{
-            product_id: product_id
-        },
-        select:{
-            path: true,
-            order: true,
-            company_key: true,
-        }
-    })
+    const images = await ImagesModel.getImagesByProductId(product_id)
 
     res.send(images)
 }
@@ -56,17 +37,7 @@ export async function getImagesController(req: Request, res: Response){
 export async function getSkusController(req: Request, res: Response){
     const product_id: number = parseInt(req.params.product_id);
 
-    const skus = await prisma.skus.findMany({
-        where:{
-            product_id: product_id
-        },
-        select:{
-            size: true,
-            open_grid: true,
-            stock: true,
-            min_quantity: true,
-        }
-    })
+    const skus = await SkusModel.getSkusByProductId(product_id)
 
     const json = JSON.stringify(skus, (_, v) => typeof v === 'bigint' ? v.toString() : v)
     res.send(json)

@@ -108,13 +108,14 @@ function App() {
     getData();
   }, [])
 
-  /*
   const current_category = Object.keys(categories)[index[0]];
   const current_products = categories[current_category];
+  /*
   const current_product = current_products[index[1]]
   console.log(current_product);
   console.log(index[1])
   */
+ console.log(categories)
 
   return (
     <>

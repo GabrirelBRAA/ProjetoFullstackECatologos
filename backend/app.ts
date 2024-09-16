@@ -15,8 +15,8 @@ class Server {
     }
 
     private config(): void {
-        this.app.use('/', routes)
         this.app.use(corsHeaders);
+        this.app.use('/', routes)
     }
 
     public listen(port: number){

@@ -1,29 +1,33 @@
-import { PrismaClient } from '@prisma/client'
-import express, { Express, Request, response, Response, NextFunction} from "express";
-import { request } from 'http';
+import express, { Express, Request, Response, NextFunction } from "express";
 import routes from './routes/routes'
+import * as dotenv from 'dotenv'
+import corsHeaders from './middlewares/cors'
 
-const app: Express = express()
+dotenv.configDotenv()
 
-app.use(function (req: Request, res: Response, next: NextFunction) {
+class Server {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    public app: express.Application;
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    constructor() {
+        this.app = express();
+        this.config();
+    }
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    private config(): void {
+        this.app.use('/', routes)
+        this.app.use(corsHeaders);
+    }
 
-    // Pass to next layer of middleware
-    next();
-});
+    public listen(port: number){
+        this.app.listen(port, () => {
+            console.log("Server Running!");
+        })
+    }
 
-app.use('/', routes)
+}
 
-app.listen(6969, () =>{
-    console.log("Server Running!");
-})
-
+const server: Server = new Server();
+const port  = parseInt(process.env.PORT as string)
+server.listen(port);
 

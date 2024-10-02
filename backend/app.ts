@@ -1,9 +1,11 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import routes from './routes/routes'
 import * as dotenv from 'dotenv'
-import corsHeaders from './middlewares/cors'
+//import corsHeaders from './middlewares/cors'
 
-dotenv.configDotenv()
+
+
+
 
 class Server {
 
@@ -15,8 +17,11 @@ class Server {
     }
 
     private config(): void {
-        this.app.use(corsHeaders);
+        const cors = require('cors')
+        //this.app.use(corsHeaders);
         this.app.use('/', routes)
+        this.app.use(cors)
+        dotenv.configDotenv()
     }
 
     public listen(port: number){

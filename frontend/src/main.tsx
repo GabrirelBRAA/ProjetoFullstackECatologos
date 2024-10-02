@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './components/App/index.tsx'
 import { createGlobalStyle } from 'styled-components'
-import { configDotenv } from 'dotenv'
 
 
 const GlobalStyle = createGlobalStyle`

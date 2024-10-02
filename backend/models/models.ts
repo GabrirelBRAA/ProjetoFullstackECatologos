@@ -15,6 +15,9 @@ export class ProductsModel{
             name: true,
             price: true,
             category: true,
+            reference: true,
+            skus: true,
+            images: true,
         }
     })
     return products

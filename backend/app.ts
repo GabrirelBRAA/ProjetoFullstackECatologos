@@ -28,6 +28,10 @@ class Server {
 }
 
 const server: Server = new Server();
-const port  = parseInt(process.env.PORT as string)
+let port  = parseInt(process.env.PORT as string)
+if(!port){
+    port = 5678;
+    console.log(`PORT env variable not specified! Starting at ${port}`)
+}
 server.listen(port);
 

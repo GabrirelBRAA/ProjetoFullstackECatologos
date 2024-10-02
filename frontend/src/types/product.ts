@@ -6,6 +6,8 @@ export type Product = {
   name: string,
   price: number,
   category: string,
+  reference: string,
   images?: Image[],
-  skus?: Sku[]
+  skus?: Sku[],
+  amountSelected: number
 }

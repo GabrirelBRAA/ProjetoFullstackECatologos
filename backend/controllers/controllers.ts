@@ -17,8 +17,11 @@ export async function getProductsController(req: Request<{}, {}, {}, ReqQuery>, 
 
     const products = await ProductsModel.getProductsByIdArray(number_ids)
 
-    res.send(products)
+    const json = JSON.stringify(products, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+    res.send(json)
 }
+
+//CONTROLLERS ABAIXO DEPRECADOS
 
 /**
 *   getImages retorna todas as imagens associadas ao id do produto em req.params   
